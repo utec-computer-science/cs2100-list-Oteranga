@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
+Node.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+iostream
+-
+
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/main.cpp
+iostream
+-
+List.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
+Node.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+

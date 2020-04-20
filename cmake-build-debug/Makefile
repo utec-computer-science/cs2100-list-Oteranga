@@ -123,33 +123,6 @@ cs2100-list-Oteranga/fast:
 	$(MAKE) -f CMakeFiles/cs2100-list-Oteranga.dir/build.make CMakeFiles/cs2100-list-Oteranga.dir/build
 .PHONY : cs2100-list-Oteranga/fast
 
-List.o: List.cpp.o
-
-.PHONY : List.o
-
-# target to build an object file
-List.cpp.o:
-	$(MAKE) -f CMakeFiles/cs2100-list-Oteranga.dir/build.make CMakeFiles/cs2100-list-Oteranga.dir/List.cpp.o
-.PHONY : List.cpp.o
-
-List.i: List.cpp.i
-
-.PHONY : List.i
-
-# target to preprocess a source file
-List.cpp.i:
-	$(MAKE) -f CMakeFiles/cs2100-list-Oteranga.dir/build.make CMakeFiles/cs2100-list-Oteranga.dir/List.cpp.i
-.PHONY : List.cpp.i
-
-List.s: List.cpp.s
-
-.PHONY : List.s
-
-# target to generate assembly for a file
-List.cpp.s:
-	$(MAKE) -f CMakeFiles/cs2100-list-Oteranga.dir/build.make CMakeFiles/cs2100-list-Oteranga.dir/List.cpp.s
-.PHONY : List.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -186,9 +159,6 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... cs2100-list-Oteranga"
-	@echo "... List.o"
-	@echo "... List.i"
-	@echo "... List.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

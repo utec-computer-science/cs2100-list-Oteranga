@@ -80,12 +80,6 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.cpp">
-			<Option target="cs2100-list-Oteranga"/>
-		</Unit>
-		<Unit filename="/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h">
-			<Option target="cs2100-list-Oteranga"/>
-		</Unit>
 		<Unit filename="/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/main.cpp">
 			<Option target="cs2100-list-Oteranga"/>
 		</Unit>

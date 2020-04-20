@@ -3,7 +3,6 @@
 //
 #pragma
 
-#include <iostream>
 #include "Node.h"
 
 template <typename T>
@@ -54,19 +53,47 @@ public:
     }
 
     // Inserta un elemento al final
-    void push_back(const T& element) = 0;
+    void push_back(const T& element){
+        node* temp= new node;
+        if(head== nullptr){
+            head=temp;
+            head->value=element;
+        }else{
+            node* current=head;
+            while(current->next!= nullptr){
+                current=current->next;
+            }
+            temp=current->next;
+            temp->value=element;
+        }
+    }
 
     // Inserta un elemento al inicio
-    void push_front(const T& element) = 0;
+    void push_front(const T& element){
+        node* temp=new node;
+        temp->next=head;
+        head=temp;
+        head->value=element;
+    }
 
     // Quita el ultimo elemento y retorna una referencia
-    T& pop_back(void) = 0;
+    T& pop_back(void){
+
+    }
 
     // Quita el primer elemento y retorna una referencia
-    T& pop_front(void) = 0;
+    T& pop_front(void){
+
+    }
 
     // Acceso aleatorio
-    T& operator[] (const int&) = 0;
+    T& operator[] (const int& num){
+        node* current=head;
+        for(int i=0; i<num;i++){
+            current=current->next;
+        }
+        return *current;
+    }
 
     // la lista esta vacia?
     bool empty(void){
@@ -103,7 +130,6 @@ public:
     // Elimina un elemento en base a un puntero
     void erase(node* element){
         node* current=head;
-        node* enlace=head;
         if(head==element){
             head=head->next;
             delete current;
@@ -111,24 +137,39 @@ public:
         while(current->next!=element){
             current=current->next;
         }
-        delete current;
+        node* temp=current->next;
+        current=temp->next;
+        delete temp;
     }
 
     // Inserta un elemento  en base a un puntero
-    void insert(node*, const T&) = 0;
+    void insert(node*, const T&){
+
+    }
 
     // Elimina todos los elementos por similitud
-    void remove(const T&) = 0;
+    void remove(const T&){
+
+    }
 
     // ordena la lista
-    List& sort(void) = 0;
+    List& sort(void){
+
+    }
 
     // invierte la lista
-    List& reverse(void) = 0;
+    List& reverse(void){
+
+    }
 
     // Imprime la lista con cout
     template<typename __T>
-    inline friend ostream& operator<<(ostream& , const List<__T>& ){
-        
+    inline friend ostream& operator<<(ostream& out, const List<__T>& list){
+        node *ptr=list.head;
+        while(ptr!= nullptr){
+            out<<ptr->value<<" ";
+            ptr=ptr->next;
+        }
+        return out;
     }
 };
