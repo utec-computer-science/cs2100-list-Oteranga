@@ -10,27 +10,30 @@ class List {
 protected:
     typedef Node<T> node;
     node *head;
+    node *tail;
 public:
     List(List& ptr){
         head=ptr.head;
+        tail=ptr.tail;
     }
 
-    List(T* arr){
-        //Constructor  parametro,
-        //llena una lista a partir de un array
-        head=arr;
+    List(T* arr, size_t size){
+        head=tail= nullptr;
+        for(int i=0; i<size; i++){
+            push_back(arr[i]);
+        }
     }
 
-    List(node*){
+    List(node* temp){
         //Constructor por parametro,
         //retorna una lista con un nodo
-
+        head=temp;
     }
 
     List(int n){
-        //Constructor por parametro,
-        //retorna un lista de randoms de tamaño n
-
+        for(int i=0; i<n; i++){
+            push_back(rand()%100+1);
+        }
     }
 
     List(void):head(nullptr){}
@@ -45,35 +48,25 @@ public:
 
     // Retorna una referencia al ultimo elemento
     T back(void){
-        node *current=head;
-        while(current->next!= nullptr){
-            current->next;
-        }
-        return current;
+        return tail;
     }
 
-    // Inserta un elemento al final
     void push_back(const T& element){
-        node* temp= new node;
+        node* temp= new node(element, nullptr);
         if(head== nullptr){
-            head=temp;
-            head->value=element;
-        }else{
-            node* current=head;
-            while(current->next!= nullptr){
-                current=current->next;
-            }
-            temp=current->next;
-            temp->value=element;
+            head=tail=temp;
         }
+        tail->next=temp;
+        tail=temp;
     }
 
-    // Inserta un elemento al inicio
     void push_front(const T& element){
-        node* temp=new node;
+        node* temp=new node{element, nullptr};
+        if(head== nullptr){
+            head=tail=temp;
+        }
         temp->next=head;
         head=temp;
-        head->value=element;
     }
 
     // Quita el ultimo elemento y retorna una referencia
@@ -159,12 +152,12 @@ public:
 
     // invierte la lista
     List& reverse(void){
-
+        
     }
 
     // Imprime la lista con cout
-    template<typename __T>
-    inline friend ostream& operator<<(ostream& out, const List<__T>& list){
+    template <typename A>
+    inline friend ostream& operator<<(ostream& out, const List<A>& list){
         node *ptr=list.head;
         while(ptr!= nullptr){
             out<<ptr->value<<" ";

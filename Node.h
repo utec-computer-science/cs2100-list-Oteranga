@@ -1,7 +1,7 @@
 //
 // Created by Alejandro  Otero on 2020-04-13.
 //
-#pragma
+#pragma once
 
 #include <iostream>
 
@@ -13,9 +13,7 @@ public:
     T value;
     Node<T> * next;
 
-    Node(void){
-
-    }
+    Node(T _value,Node<T>* _next):value(_value),next(_next){}
 
     ~Node(void){
     }
