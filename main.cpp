@@ -6,8 +6,10 @@ using namespace std;
 
 int main(){
     List<int> list;
-    list.push_back(6);list.push_back(7);list.push_back(8);list.push_front(5);
-    list.pop_back();
+    list.push_back(4);list.push_back(2);list.push_back(4);list.push_front(9);
+    list.sort();
+    //list.reverse();
+    list.remove(4);
     cout<<list;
 
     return 0;

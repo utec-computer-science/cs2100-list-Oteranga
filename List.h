@@ -43,12 +43,12 @@ public:
 
     // Retorna una referencia al primer elemento
     T front(void){
-        return head;
+        return head->value;
     }
 
     // Retorna una referencia al ultimo elemento
     T back(void){
-        return tail;
+        return tail->value;
     }
 
     void push_back(const T& element){
@@ -69,93 +69,124 @@ public:
         head=temp;
     }
 
-    // Quita el ultimo elemento y retorna una referencia
-    T& pop_back(void){
-
+    void pop_back(void){
+        node* current=head;
+        while(current->next!= tail){
+            current=current->next;
+        }
+        tail=current;
+        current->next= nullptr;
+        delete current;
     }
 
-    // Quita el primer elemento y retorna una referencia
-    T& pop_front(void){
-
+    void pop_front(void){
+        node* current=head;
+        head=head->next;
+        current->next= nullptr;
+        delete current;
     }
 
-    // Acceso aleatorio
     T& operator[] (const int& num){
         node* current=head;
         for(int i=0; i<num;i++){
             current=current->next;
         }
-        return *current;
+        return current->value;
     }
 
-    // la lista esta vacia?
     bool empty(void){
-        if(head!=nullptr){
-            return false;
-        }
-        return true;
+        return head==nullptr;
     }
 
-    // retorna el tamaño de la lista
     unsigned int size(void){
-        if(empty()== true){
-            return 0;
-        }
         T num=0;
         node *current=head;
-        while(current->next!= nullptr){
+        while(current!= nullptr){
             current=current->next;
             ++num;
         }
         return num;
     }
 
-    // Elimina toda la lista
     void clear(void){
-        node *current=head;
-        for(int i=0;i<size();i++){
-            head=head->next;
-            delete current;
-            current=head;
+        while(head!= nullptr){
+            pop_front();
         }
     }
 
-    // Elimina un elemento en base a un puntero
-    void erase(node* element){
+    void erase(node* ptr){
         node* current=head;
-        if(head==element){
+        if(head==ptr){
             head=head->next;
             delete current;
         }
-        while(current->next!=element){
+        node* temp;
+        while(current!= nullptr){
+            if(current->next==ptr){
+                temp=current->next;
+                ptr->next=temp->next;
+                delete temp;
+            }else
             current=current->next;
         }
-        node* temp=current->next;
-        current=temp->next;
-        delete temp;
+
     }
 
     // Inserta un elemento  en base a un puntero
-    void insert(node*, const T&){
-
+    void insert(node* ptr, const T& element){
+        node* current=head;
+        while(current!= nullptr){
+            if(current->next==ptr){
+                current=current->next;
+                current->value=element;
+            } else
+                current=current->next;
+        }
     }
 
     // Elimina todos los elementos por similitud
-    void remove(const T&){
-
+    void remove(const T& element){
+        node* temp;
+        node* current=head;
+        while(current!= nullptr){
+            current=current->next;
+            if(current->value==element){
+                temp=current->next;
+                delete current;
+                current=temp;
+            }
+        }
     }
 
-    // ordena la lista
-    List& sort(void){
-
+    void sort(void){
+        node* current=head;
+        node* temp;
+        while(current!=nullptr){
+            temp=current->next;
+            while(temp!= nullptr){
+                if(current->value>temp->value){
+                    int num=temp->value;
+                    temp->value=current->value;
+                    current->value=num;
+                }
+                temp=temp->next;
+            }
+            current=current->next;
+        }
     }
 
     // invierte la lista
-    List& reverse(void){
-        
+    void reverse(void){
+        node *current=head;
+        push_front(head->value);
+        pop_front();
+        while(current!= nullptr){
+            current=current->next;
+            push_front(current->value);
+            pop_front();
+        }
     }
 
-    // Imprime la lista con cout
     template <typename A>
     inline friend ostream& operator<<(ostream& out, const List<A>& list){
         node *ptr=list.head;
