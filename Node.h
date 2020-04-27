@@ -10,26 +10,12 @@ using namespace std;
 template <typename T>
 class Node {
 public:
-    typedef T value_t;
-    typedef unsigned int size_t;
+    T value;
+    Node<T> *next;
 
-public:
-    value_t value;
+    Node(T _value, Node<T>* _next):value(_value),next(_next){}
 
-public:
-    Node(const value_t& _value):value(_value){
-    }
-
-    size_t size(){
-        return 0;
-    }
-
-    ~Node(void){
-    }
-
-    value_t& operator*(void){
-        return value;
-    }
+    ~Node(void){}
 
     template <typename _T>
     inline friend ostream& operator<< (ostream& _out, const Node<_T>& _node){
@@ -38,31 +24,13 @@ public:
     }
 };
 
-template <typename T>
-class ForwardListNode : public Node<T> {
-public:
-    typedef typename Node<T>::value_t value_t;
-
-    ForwardListNode<T>* next;
-
-    ForwardListNode(const T& _value):Node<T>(_value),next(nullptr){}
-
-    ~ForwardListNode(void){}
-
-    template <typename _T>
-    inline friend ostream& operator<< (ostream& _out, const ForwardListNode<_T>& _node){
-        _out << "Nodo: [v: " <<  _node.value << ", p: " << _node.next << "]";
-        return _out;
-    }
-};
-
 template <typename A>
-class DoublyListNode: public Node<A>{
+class DoublyListNode{
 public:
     DoublyListNode<A> *next;
     DoublyListNode<A> *prev;
 
-    DoublyListNode(const A& _value):Node<A>(_value),next(nullptr),prev(nullptr){}
+    DoublyListNode():DoublyListNode<A>(0),next(nullptr),prev(nullptr){}
 
     ~DoublyListNode(void){}
 

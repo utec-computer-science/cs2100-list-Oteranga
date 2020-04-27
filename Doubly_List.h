@@ -4,20 +4,19 @@
 
 #pragma
 
-/*
-
 #include "Node.h"
+#include "Iterator.h"
 
+/*
 template<typename T>
 class Dlist{
 protected:
-    typedef node<T> node;
-    node *head;
-    node* tail;
+    typedef Node<T> node;
+    typedef DoublyListNode<T> Dnode;
+    Dnode *head;
 public:
     Dlist(Dlist& ptr){
         head=ptr.head;
-        tail=ptr.tail;
     }
 
     Dlist(T* arr, size_t size){
@@ -36,18 +35,22 @@ public:
         }
     }
 
-    Dlist(void):head(nullptr),tail(nullptr){}
+    Dlist(void):head(nullptr){}
 
     ~Dlist(void){}
 
     // Retorna una referencia al primer elemento
-    T front(void){
+    T& front(void){
         return head->value;
     }
 
     // Retorna una referencia al ultimo elemento
-    T back(void){
-        return tail->value;
+    T& back(void){
+        Dnode *current=head;
+        while(current->next!= nullptr){
+            current=current->next;
+        }
+        return current->value;
     }
 
     // Inserta un elemento al final
@@ -93,8 +96,14 @@ public:
 
     // Imprime la lista con cout
     template<typename __T>
-    inline friend std::ostream& operator<<
-            (std::ostream& , const Dlist<__T>& );
+    inline friend std::ostream& operator<<(std::ostream& out, const Dlist<__T>& ptr){
+        Dnode *temp=ptr.head;
+        while(temp!= nullptr){
+            out<<temp->value<<" ";
+            temp=temp->next;
+        }
+        return out;
+    }
 
     Dlist& operator<< (const T& _value){
         this->push_back(_value);
@@ -107,4 +116,4 @@ public:
     }
 };
 
- */
+*/

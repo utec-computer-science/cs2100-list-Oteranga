@@ -9,10 +9,18 @@
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Doubly_List.h
 Node.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+Iterator.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Iterator.h
+
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Iterator.h
+Node.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
 
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
 Node.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+Iterator.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Iterator.h
 
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
 iostream
@@ -27,4 +35,6 @@ List.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
 Node.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+Iterator.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Iterator.h
 
