@@ -6,6 +6,10 @@
 
 #IncludeRegexTransform: 
 
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Doubly_List.h
+Node.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
 Node.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
@@ -17,6 +21,8 @@ iostream
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/main.cpp
 iostream
 -
+Doubly_List.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Doubly_List.h
 List.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
 Node.h
