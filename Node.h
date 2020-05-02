@@ -27,10 +27,12 @@ public:
 template <typename A>
 class DoublyListNode{
 public:
+    A value;
     DoublyListNode<A> *next;
     DoublyListNode<A> *prev;
+    typedef DoublyListNode<A> Dnode;
 
-    DoublyListNode():DoublyListNode<A>(0),next(nullptr),prev(nullptr){}
+    DoublyListNode(A _value):value(_value),next(nullptr),prev(nullptr){}
 
     ~DoublyListNode(void){}
 
