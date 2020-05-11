@@ -61,14 +61,29 @@ namespace List {
         typedef Node<T> node;
         node *head;
         node *tail;
+
+    protected:
+        template<int nodeType>
+        void push_back_imp(node**, node**, T);
+
+        template <int nodeType>
+        void push_front_imp(node**, node**, T);
+
+        template <int nodeType>
+        void pop_back_imp(node**, node**);
+
+        template <int nodeType>
+        void pop_front_imp(node**, node**);
+
     public:
+
         List(List &ptr) {
             head = ptr.head;
             tail = ptr.tail;
         }
 
         List(T *arr, size_t size) {
-            head = nullptr;
+            head = tail=nullptr;
             for (int i = 0; i < size; i++) {
                 push_back(arr[i]);
             }
@@ -86,22 +101,22 @@ namespace List {
             }
         }
 
-        List(void) : head(nullptr) {}
+        List(void) : head(nullptr),tail(nullptr) {}
 
-        ~List(void) {
-        }
+        ~List(void) {}
 
-        // Retorna una referencia al primer elemento
+
         T &front(void) {
             return head->value;
         }
 
-        // Retorna una referencia al ultimo elemento
         T &back(void) {
             return tail->value;
         }
 
         void push_back(const T &element) {
+            //push_back_imp<NodeTraits<T, T>::nodeType>(&head, &tail, element);
+
             node *temp = new node(element, nullptr);
             if (head == nullptr) {
                 head = tail = temp;
@@ -111,6 +126,7 @@ namespace List {
         }
 
         void push_front(const T &element) {
+            //push_front_imp<NodeTraits<T, T>::nodeType>(&head, &tail, element);
             node *temp = new node(element, nullptr);
             if (head == nullptr) {
                 head = tail = temp;
@@ -120,6 +136,7 @@ namespace List {
         }
 
         void pop_back(void) {
+            //pop_back_imp<NodeTraits<T, T>::nodeType>(&head, &tail);
             node *current = head;
             while (current->next != tail) {
                 current = current->next;
@@ -130,6 +147,7 @@ namespace List {
         }
 
         void pop_front(void) {
+            //pop_front_imp<NodeTraits<T, T>::nodeType>(&head, &tail);
             node *current = head;
             head = head->next;
             delete current;
@@ -171,10 +189,12 @@ namespace List {
             }else {
                 node *current = head;
                 node *temp;
+                current=current->next;
                 while (current != nullptr) {
+                    temp=current;
                     if (current->next == ptr) {
-                        temp = current->next;
-                        ptr->next = temp->next;
+                        current=current->next;
+                        temp->next= current->next;
                         delete temp;
                         break;
                     } else
@@ -189,10 +209,14 @@ namespace List {
             else if(tail==ptr)
                 push_back(element);
             else {
+                ptr=new node(element, ptr);
                 node *current = head;
+                node *prev_node=current;
+                current=current->next;
                 while (current != nullptr) {
                     if (current == ptr) {
-                        current->value = element;
+                        prev_node->next=ptr;
+                        ptr->next=current;
                         break;
                     } else
                         current = current->next;
@@ -237,19 +261,19 @@ namespace List {
             }
         }
 
-        // invierte la lista
         void reverse(void) {
             if(head!= nullptr) {
-                node *current = head;
-                node *sig = nullptr;
-                node *ant = nullptr;
-                while (current != nullptr) {
-                    sig = current->next;
-                    current->next = ant;
-                    ant = current;
-                    current = sig;
+                node* current=head;
+                node* next_node=head;
+                node* prev= nullptr;
+                while(next_node!= nullptr){
+                    next_node=next_node->next;
+                    current->next=prev;
+                    prev=current;
+                    current=next_node;
                 }
-                head = ant;
+                tail=head;
+                head=prev;
             }
         }
 
@@ -283,4 +307,89 @@ namespace List {
             return *this;
         }
     };
+
+
+    template <typename Node, typename ValueNode, int nodeType>
+    class ListHelper{
+    public:
+        static void push_front_imp(Node** head, Node** tail, ValueNode element){
+            cout << "Hola no tengo trait definido" << endl;
+        }
+        static void push_back_imp(Node** head, Node** tail, ValueNode element){
+            cout << "Hola no tengo trait definido" << endl;
+        }
+        static void pop_back_imp(Node** head, Node** tail){
+            cout << "Hola no tengo trait definido" << endl;
+        }
+        static void pop_front_imp(Node** head, Node** tail){
+            cout << "Hola no tengo trait definido" << endl;
+        }
+        static void print(Node** head, Node** tail, ValueNode element){
+            cout << "Hola no tengo trait definido" << endl;
+
+        }
+    };
+
+    template <typename Node, typename ValueNode>
+    class ListHelper<Node,ValueNode,FOWARD_NODE>{
+    public:
+        static void push_back_imp(Node** head, Node** tail, ValueNode element){
+            cout << "Hola soy el push_back" << endl;
+            /*
+            Node *new_node = new Node{element,nullptr};
+            if (!head){
+                tail = head = &new_node;
+            } else {
+                (*tail)->next = new_node;
+                tail = &((*tail)->next);
+            }*/
+        }
+
+        static void push_front_imp(Node** head, Node** tail, ValueNode element){
+            cout<<"Hola soy el push_front "<<endl;
+            /*
+            Node *temp = new node(element, nullptr);
+            if (head == nullptr) {
+                head = tail = &temp;
+            }
+            temp->next = &(*head);
+            head = &temp;
+             */
+        }
+
+        static void pop_back_imp(Node** head, Node** tail){
+            cout<<"Hola soy el pop_back"<<endl;
+
+            /*
+            node *current = head;
+            while (current->next != &(*tail)) {
+                current = current->next;
+            }
+            tail = &current;
+            delete (*tail)->next;
+            (*tail)->next = nullptr;
+
+             */
+        }
+
+        static void pop_front_imp(Node** head, Node** tail){
+            cout<<"Hola soy el pop_front"<<endl;
+            /*
+            node *current = &(*head);
+            (*head) = (*head)->next;
+            delete current;
+             */
+        }
+    };
+
+    /*
+    template< typename Node>  //template <int nodeType>
+    void Node<Node>::push_back_imp(
+            typename List<Node>::node_t ** head,
+            typename List<Node>::node_t ** tail,
+            typename List<Node>::value_t element){
+
+        ListHelper<List<Node>::T,List<Node>::T,nodeType>::add(head,tail,element);
+    }
+     */
 }

@@ -5,6 +5,10 @@
 
 #include <iostream>
 
+#define DEFAULT_NODE 0
+#define FOWARD_NODE 1
+#define DOUBLE_NODE 2
+
 using namespace std;
 
 template <typename T>
@@ -41,4 +45,20 @@ public:
         _out << "Nodo: [v: " <<  _node.value << ", p: " << _node.next << "]";
         return _out;
     }
+};
+
+
+template <typename T, typename NT>
+struct NodeTraits{
+    static const int nodeType = DEFAULT_NODE;
+};
+
+template <typename NT>
+struct NodeTraits< Node<NT>, NT >{
+    static const int nodeType = FOWARD_NODE;
+};
+
+template <typename NT>
+struct NodeTraits< DoublyListNode<NT>, NT >{
+    static const int nodeType = DOUBLE_NODE;
 };

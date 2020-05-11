@@ -22,7 +22,7 @@ namespace Dlist {
 
         ~Iterator(void) {}
 
-        virtual bool operator!=(Iterator<T> it) {
+        bool operator!=(Iterator<T> it) {
             return this->pointer != it.pointer;
         }
 
@@ -34,23 +34,27 @@ namespace Dlist {
             this->pointer = this->pointer->next;
         }
 
-        bool operator==(const Iterator &it) {
+        void operator--(void){
+            this->pointer=this->pointer->prev;
+        }
+
+        bool operator==(const Iterator<T> &it) {
             return this->pointer == it.pointer;
         }
 
-        bool operator<=(const Iterator &it) {
+        bool operator<=(const Iterator<T> &it) {
             return this->pointer <= it.pointer;
         }
 
-        bool operator>=(const Iterator &it) {
+        bool operator>=(const Iterator<T> &it) {
             return this->pointer >= it.pointer;
         }
 
-        bool operator<(const Iterator &it) {
+        bool operator<(const Iterator<T> &it) {
             return this->pointer < it.pointer;
         }
 
-        bool operator>(const Iterator &it) {
+        bool operator>(const Iterator<T> &it) {
             return this->pointer > it.pointer;
         }
 
@@ -120,17 +124,25 @@ namespace Dlist {
         }
 
         void pop_back(void){
-            Dnode* temp=tail;
-            tail=temp->prev;
-            tail->next= nullptr;
-            delete temp;
+            if(tail== nullptr)
+                return;
+            else {
+                Dnode *temp = tail;
+                tail->prev->next = nullptr;
+                tail = tail->prev;
+                delete temp;
+            }
         }
 
         void pop_front(void){
-            Dnode* temp=head;
-            head=head->next;
-            head->prev= nullptr;
-            delete temp;
+            if(head== nullptr)
+                return;
+            else {
+                Dnode *temp = head;
+                head = head->next;
+                head->prev = nullptr;
+                delete temp;
+            }
         }
 
         T &operator[](const int & element){
@@ -159,55 +171,28 @@ namespace Dlist {
             }
         }
 
+        // Elimina toda la lista
         void clear(void){
             while (head!= nullptr){
-                pop_front();
+                pop_back();
             }
-
         }
 
-        // Elimina un elemento en base a un puntero
-        void erase(Node<T> * ptr){
+        void erase(Dnode * ptr){
             if(head==ptr)
                 pop_front();
             else if(tail==ptr)
                 pop_back();
             else{
-
-
-            }
-
-        }
-
-        // Inserta un elemento  en base a un puntero
-        void insert(Node<T> *ptr, const T & element){
-            if(head==ptr)
-                push_front(element);
-            else if(tail==ptr)
-                push_back(element);
-            else{
-
-
-            }
-        }
-
-        // Elimina todos los elementos por similitud
-        void remove(const T & element){
-            if(head->value==element)
-                push_front(element);
-            else if(tail->value==element)
-                push_back(element);
-            else{
                 Dnode* current=head;
                 Dnode* temp=current;
                 while(current!= nullptr){
                     current=current->next;
-                    if(current->value==element){
-                        temp->next=current->next;
+                    if(current==ptr){
                         current=current->next;
+                        temp->next=current;
                         current->prev=temp;
                         delete current;
-                        current=temp->next;
                     }else
                         current=current->next;
                     temp=current;
@@ -215,14 +200,78 @@ namespace Dlist {
             }
         }
 
-        // ordena la lista
-        Dlist &sort(void){
-
+        void insert(Dnode *ptr, const T & element){
+            if(head==ptr)
+                push_front(element);
+            else if(tail==ptr)
+                push_back(element);
+            else{
+                Dnode* current=head;
+                Dnode* prev_node=current;
+                Dnode* new_node=new Dnode{element};
+                while(current!= nullptr){
+                    current=current->next;
+                    if(current==ptr){
+                        prev_node->next=new_node;
+                        new_node->next=current;
+                        new_node->prev=prev_node;
+                        current->prev=new_node;
+                    }
+                    prev_node=current;
+                }
+            }
         }
 
-        // invierte la lista
-        void reverse(void){
+        void remove(const T & element){
+            Dnode* temp=head;
+            while(temp!= nullptr){
+                if(temp->value==element){
+                    if(temp==head)
+                        pop_front();
+                    else if(temp== tail)
+                        pop_back();
+                    else{
+                        Dnode* current=temp;
+                        current->prev->next=current->next;
+                        current->next->prev=current->prev;
+                        delete current;
+                    }
+                }
+                    temp=temp->next;
+            }
+        }
 
+        void sort(void){
+            Dnode* current=head;
+            Dnode* temp;
+            while (current!= nullptr){
+                temp=current->next;
+                while(temp!= nullptr){
+                    if(current->value>temp->value){
+                        int num = temp->value;
+                        temp->value=current->value;
+                        current->value=num;
+                    }
+                    temp=temp->next;
+                }
+                current=current->next;
+            }
+        }
+
+        void reverse(void){
+            if(head!= nullptr){
+                Dnode* current=head;
+                Dnode* next_node;
+                while(current!= nullptr) {
+                    next_node = current->next;
+                    current->next = current->prev;
+                    current->prev = next_node;
+                    current=next_node;
+                }
+                current=head;
+                head=tail;
+                tail=current;
+            }
         }
 
         //iterators
@@ -252,6 +301,32 @@ namespace Dlist {
         Dlist &operator>>(const T &_value) {
             this->push_front(_value);
             return *this;
+        }
+    };
+
+    template <typename Node, typename ValueNode, int nodeType>
+    class ListHelper{
+    public:
+        static void add(Node** head, Node** tail, ValueNode element){
+            cout << "Hola no tengo trait definido" << endl;
+
+        }
+        static void remove(Node** head, Node** tail, ValueNode element){
+            cout << "Hola no tengo trait definido" << endl;
+
+        }
+        static void print(Node** head, Node** tail, ValueNode element){
+            cout << "Hola no tengo trait definido" << endl;
+
+        }
+    };
+
+    template <typename Node, typename ValueNode>
+    class ListHelper<Node,ValueNode,DOUBLE_NODE>{
+    public:
+        static void add(Node** head, Node** tail, ValueNode element){
+            cout << "Hola soy el push_back para una double list." << endl;
+
         }
     };
 
