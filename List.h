@@ -62,6 +62,7 @@ namespace List {
         node *head;
         node *tail;
 
+    /*
     protected:
         template<int nodeType>
         void push_back_imp(node**, node**, T);
@@ -74,6 +75,7 @@ namespace List {
 
         template <int nodeType>
         void pop_front_imp(node**, node**);
+    */
 
     public:
 
@@ -308,6 +310,7 @@ namespace List {
         }
     };
 
+    /*
 
     template <typename Node, typename ValueNode, int nodeType>
     class ListHelper{
@@ -335,32 +338,31 @@ namespace List {
     public:
         static void push_back_imp(Node** head, Node** tail, ValueNode element){
             cout << "Hola soy el push_back" << endl;
-            /*
+
             Node *new_node = new Node{element,nullptr};
             if (!head){
                 tail = head = &new_node;
             } else {
                 (*tail)->next = new_node;
                 tail = &((*tail)->next);
-            }*/
+            }
         }
 
         static void push_front_imp(Node** head, Node** tail, ValueNode element){
             cout<<"Hola soy el push_front "<<endl;
-            /*
+
             Node *temp = new node(element, nullptr);
             if (head == nullptr) {
                 head = tail = &temp;
             }
             temp->next = &(*head);
             head = &temp;
-             */
+
         }
 
         static void pop_back_imp(Node** head, Node** tail){
             cout<<"Hola soy el pop_back"<<endl;
 
-            /*
             node *current = head;
             while (current->next != &(*tail)) {
                 current = current->next;
@@ -369,20 +371,18 @@ namespace List {
             delete (*tail)->next;
             (*tail)->next = nullptr;
 
-             */
         }
 
         static void pop_front_imp(Node** head, Node** tail){
             cout<<"Hola soy el pop_front"<<endl;
-            /*
+
             node *current = &(*head);
             (*head) = (*head)->next;
             delete current;
-             */
+
         }
     };
 
-    /*
     template< typename Node>  //template <int nodeType>
     void Node<Node>::push_back_imp(
             typename List<Node>::node_t ** head,
@@ -391,5 +391,7 @@ namespace List {
 
         ListHelper<List<Node>::T,List<Node>::T,nodeType>::add(head,tail,element);
     }
-     */
+
+
+    */
 }

@@ -63,6 +63,7 @@ namespace Clist {
         node* tail;
         int length;
 
+    /*
     protected:
         template<int nodeType>
         void push_back_imp(node**, node**, T);
@@ -75,6 +76,7 @@ namespace Clist {
 
         template <int nodeType>
         void pop_front_imp(node**, node**);
+    */
 
     public:
         Circular_List(Circular_List & ptr){
@@ -324,6 +326,7 @@ namespace Clist {
 
     };
 
+    /*
     template <typename Node, typename ValueNode, int nodeType>
     class ListHelper{
     public:
@@ -408,5 +411,7 @@ namespace Clist {
              */
         }
     };
+
+    */
 
 }

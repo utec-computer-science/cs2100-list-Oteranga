@@ -47,7 +47,7 @@ public:
     }
 };
 
-
+/*
 template <typename T, typename NT>
 struct NodeTraits{
     static const int nodeType = DEFAULT_NODE;
@@ -62,3 +62,5 @@ template <typename NT>
 struct NodeTraits< DoublyListNode<NT>, NT >{
     static const int nodeType = DOUBLE_NODE;
 };
+
+ */

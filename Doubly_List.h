@@ -304,6 +304,7 @@ namespace Dlist {
         }
     };
 
+    /*
     template <typename Node, typename ValueNode, int nodeType>
     class ListHelper{
     public:
@@ -329,5 +330,6 @@ namespace Dlist {
 
         }
     };
+     */
 
 }

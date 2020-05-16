@@ -1,14 +1,54 @@
 #include <iostream>
+/*
 #include "Circular_List.h"
 #include "Doubly_Circular_List.h"
 #include "Doubly_List.h"
 #include "List.h"
 #include "Node.h"
+ */
+#include "List_Types.h"
 
 using namespace std;
 
 int main(){
 
+    typedef ForwardListNode<int> forward_node_t;
+    typedef List<forward_node_t> list_t;
+    typedef Iterator<int> iterator_t;
+
+    typedef DoubleListNode<int> double_node_t;
+    typedef List<double_node_t> dlist_t;
+
+    typedef CircularListNode<int> circular_node_t;
+    typedef List<circular_node_t> circularList_t;
+
+    typedef DoublyCircularListNode<int> dcircular_node_t;
+    typedef List<dcircular_node_t> dcircularList_t;
+
+    list_t list;
+    dlist_t dlist;
+    circularList_t clist;
+    dcircularList_t Dclist;
+
+    list<<10>>11>>2<<4;
+    list.pop_back();list.remove(2);
+    list.sort();
+    list.reverse();
+    cout<<list.size()<<" ";
+    cout<<list[0];
+
+    dlist<<1>>0<<9>>1<<4;
+    dlist.pop_back();
+
+    clist>>1>>3>>9<<4;
+    clist.sort();
+
+    Dclist<<4>>3;
+    cout<<endl;
+    cout<<Dclist[0];
+
+
+    /*
     cout<<"Linked list:"<<'\n';
     List::List<int> list;
     List::Iterator<int> it;
@@ -34,6 +74,7 @@ int main(){
     cout<<"Tamaño de la lista: "<<list.size();
     cout<<endl<<endl;
 
+     */
     /*
     cout<<"Doubly linked list:"<<endl;
     Dlist::Dlist<int> dlist;

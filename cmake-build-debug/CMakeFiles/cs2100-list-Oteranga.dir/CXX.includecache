@@ -22,6 +22,10 @@ Node.h
 Node.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
 
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List_Types.h
+iostream
+-
+
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
 iostream
 -
@@ -39,4 +43,6 @@ List.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List.h
 Node.h
 /Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/Node.h
+List_Types.h
+/Users/alejandrootero/Documents/UTEC/Ciclo 5/Git/cs2100-list-Oteranga/List_Types.h
 
