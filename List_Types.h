@@ -199,7 +199,7 @@ protected:
 
 protected:
     node_t* head;
-    node_t* tail= nullptr;
+    node_t* tail;
 
     template<int nodeType>
     void push_back_imp(Node**,Node**,value_t);
@@ -221,6 +221,12 @@ protected:
 
     template <int nodeType>
     void sort_imp(Node**,Node**);
+
+    template <int nodeType>
+    void print_imp(Node**,Node**);
+
+    template <int nodeType>
+    unsigned int size_imp(Node**,Node**);
 
 public:
     List(const List& ptr){
@@ -266,10 +272,10 @@ public:
         return tail->value;
     }
 
-    node_t* pop_back(void){
+    void pop_back(void){
         pop_back_imp<NodeTraits<node_t,value_t>::nodeType>(&head,&tail);
     }
-    node_t* pop_front(void){
+    void pop_front(void){
         pop_front_imp<NodeTraits<node_t,value_t>::nodeType>(&head,&tail);
     }
 
@@ -285,17 +291,8 @@ public:
         return head == nullptr;
     };
 
-
-
-    
     unsigned int size(void){
-        int num = 0;
-        Node* current=head;
-        while (current!=nullptr){
-            current=current->next;
-            num++;
-        }
-        return num;
+        size_imp<NodeTraits<node_t ,value_t>::nodeType>(&head,&tail);
     }
 
     void reverse(){
@@ -319,10 +316,16 @@ public:
         return Iterator(tail);
     }
 
+
+    void print(){
+        print_imp<NodeTraits<node_t,value_t>::nodeType>(&head,&tail);
+    }
+
+    /*
     template<typename _T>
     inline friend ostream& operator<< (ostream& out, const List<_T>& _list){
 
-        /*
+
         typename List<_T>::Iterator it = _list.begin();
         for(; it != _list.end(); ++it){
             out << *it << " -> ";
@@ -337,8 +340,8 @@ public:
         }
 
         return out;
-         */
     }
+     */
 
 
     List& operator<< (const value_t& _value){
@@ -380,6 +383,14 @@ public:
     static void sort_imp(Node** &head, Node** &tail){
 
     }
+
+    static void print_imp(Node** &head, Node** &tail){
+
+    }
+
+    static unsigned int size_imp(Node** &head, Node** &tail){
+
+    }
 };
 
 template <typename Node, typename ValueNode>
@@ -391,7 +402,7 @@ public:
             *tail = *head = new_node;
         } else {
             (*tail)->next = new_node;
-            tail = &((*tail)->next);
+            (*tail) = (*tail)->next;
         }
     }
 
@@ -409,7 +420,7 @@ public:
         while (current->next != (*tail)) {
             current = current->next;
         }
-        tail = &current;
+        (*tail) = current;
         delete (*tail)->next;
         (*tail)->next = nullptr;
     }
@@ -421,22 +432,22 @@ public:
     }
 
     static void remove_imp(Node** &head,Node** &tail,ValueNode element){
+        Node *current = (*head);
+        Node *temp=current;
+        while (current != nullptr) {
         if((*head)->value==element){
             pop_front_imp(head,tail);
         }else if((*tail)->value==element)
             pop_back_imp(head,tail);
         else {
-            Node *current = (*head);
-            Node *temp=current;
-            while (current != nullptr) {
-                current = current->next;
-                if (current->value == element) {
-                    temp->next = current->next;
-                    delete current;
-                    current = temp->next;
-                }
-                temp = current;
+            if (current->value == element) {
+                temp->next = current->next;
+                delete current;
+                current = temp->next;
             }
+            temp = current;
+        }
+            current = current->next;
         }
     }
 
@@ -472,6 +483,24 @@ public:
             current = current->next;
         }
     }
+
+    static void print_imp(Node** &head, Node** &tail){
+        Node* current=(*head);
+        while(current){
+            cout<<current->value<<" ";
+            current=current->next;
+        }
+    }
+
+    static unsigned int size_imp(Node** &head, Node** &tail){
+        int num=0;
+        Node* current=(*head);
+        while(current!= nullptr){
+            current=current->next;
+            num++;
+        }
+        return num;
+    }
 };
 
 template <typename Node, typename ValueNode>
@@ -484,7 +513,7 @@ public:
         }else {
             (*tail)->next = current;
             current->prev = (*tail);
-            tail = &current;
+            (*tail) = current;
         }
     }
 
@@ -495,7 +524,7 @@ public:
         }else{
             current->next=(*head);
             (*head)->prev=current;
-            *head=current;
+            (*head)=current;
         }
     }
 
@@ -551,7 +580,7 @@ public:
                 current=next_node;
             }
             current=(*head);
-            head=tail;
+            *head=*tail;
             *tail=current;
         }
     }
@@ -571,6 +600,24 @@ public:
             }
             current=current->next;
         }
+    }
+
+    static void print_imp(Node** &head, Node** &tail){
+        Node* current=(*head);
+        while(current){
+            cout<<current->value<<" ";
+            current=current->next;
+        }
+    }
+
+    static unsigned int size_imp(Node** &head, Node** &tail){
+        int num=0;
+        Node* current=(*head);
+        while(current!= nullptr){
+            current=current->next;
+            num++;
+        }
+        return num;
     }
 };
 
@@ -625,7 +672,29 @@ public:
     }
 
     static void remove_imp(Node** &head,Node** &tail,ValueNode element){
-
+        Node* current=*head;
+        Node* prev_node=current;
+        current=current->next;
+        while(current!=(*head)) {
+            if(prev_node->value==element) {
+                if ((*head)->value == element)
+                    pop_front_imp(head,tail);
+                else if ((*tail)->value == element)
+                    pop_back_imp(head,tail);
+                else {
+                    Node* temp=(*head);
+                    while (temp->next!=prev_node){
+                        temp=temp->next;
+                    }
+                    temp->next = current;
+                    delete prev_node;
+                }
+            }
+            prev_node = current;
+            current = current->next;
+        }
+        if(prev_node->value==(*tail)->value)
+            pop_back_imp(head,tail);
     }
 
     static void reverse_imp(Node** &head, Node** &tail){
@@ -640,9 +709,9 @@ public:
                 next_node=current->next;
                 current->next=prev_node;
             }
-            (*head)->next=(*tail);
+            (*head)->next=*tail;
             current=(*head);
-            head=tail;
+            *head=*tail;
             *tail=current;
         }
     }
@@ -663,6 +732,25 @@ public:
             }
             current=current->next;
         }
+    }
+
+    static void print_imp(Node** &head, Node** &tail){
+        Node* current=(*head);
+        while(current!=(*tail)){
+            cout<<current->value<<" ";
+            current=current->next;
+        }
+        cout<<current->value;
+    }
+
+    static unsigned int size_imp(Node** &head, Node** &tail){
+        int num=1;
+        Node* current=(*head);
+        while(current!=(*tail)){
+            current=current->next;
+            num++;
+        }
+        return num;
     }
 };
 
@@ -723,9 +811,9 @@ public:
             *head= *tail=nullptr;
             delete current;
         }else {
-            head=head->next;
-            head->prev=tail;
-            tail->next=head;
+            *head=(*head)->next;
+            (*head)->prev=*tail;
+            (*tail)->next=*head;
             delete current;
         }
     }
@@ -735,9 +823,9 @@ public:
         while(temp!= (*head)->prev){
             if(temp->value==element){
                 if(temp==(*head))
-                    pop_front_imp();
+                    pop_front_imp(head,tail);
                 else if(temp== (*head)->prev)
-                    pop_back_imp();
+                    pop_back_imp(head,tail);
                 else{
                     Node* current=temp;
                     current->prev->next=current->next;
@@ -748,12 +836,12 @@ public:
             temp=temp->next;
         }
         if(temp->value==(*head)->prev->value)
-            pop_back_imp();
+            pop_back_imp(head,tail);
     }
 
     static void reverse_imp(Node** &head, Node** &tail){
         if((*head)!= nullptr){
-            Node* current=head;
+            Node* current=(*head);
             Node* temp=current->next;
             current->prev=temp;
             while(temp!=(*head)){
@@ -762,8 +850,8 @@ public:
                 current=temp;
                 temp=temp->prev;
             }
-            head=current;
-            tail=head->prev;
+            *head=current;
+            (*tail)=(*head)->prev;
         }
     }
 
@@ -771,7 +859,7 @@ public:
         Node* current=(*head);
         Node* index;
         int temp;
-        while(current!=(*head)->prev){
+        while(current!=(*tail)){
             index=current->next;
             while (index!=(*head)){
                 if(current->value>index->value){
@@ -783,6 +871,25 @@ public:
             }
             current=current->next;
         }
+    }
+
+    static void print_imp(Node** &head, Node** &tail){
+        Node* current=(*head);
+        while(current!=(*tail)){
+            cout<<current->value<<" ";
+            current=current->next;
+        }
+        cout<<current->value;
+    }
+
+    static unsigned int size_imp(Node** &head, Node** &tail){
+        int num=1;
+        Node* current=(*head);
+        while(current!=(*tail)){
+            current=current->next;
+            num++;
+        }
+        return num;
     }
 };
 
@@ -843,4 +950,19 @@ void List<Node>::sort_imp(
         typename List<Node>::node_t ** tail){
     ListHelper<List<Node>::node_t, List<Node>::value_t,nodeType>::sort_imp(head,tail);
 }
+
+template <typename Node> template <int nodeType>
+void List<Node>::print_imp(
+        typename List<Node>::node_t ** head,
+        typename List<Node>::node_t ** tail){
+    ListHelper<List<Node>::node_t ,List<Node>::value_t,nodeType>::print_imp(head,tail);
+}
+
+template <typename Node> template <int nodeType>
+unsigned int List<Node>::size_imp(
+        typename List<Node>::node_t ** head,
+        typename List<Node>::node_t ** tail){
+    ListHelper<List<Node>::node_t ,List<Node>::value_t,nodeType>::size_imp(head,tail);
+}
+
 
